@@ -8,12 +8,23 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField]
     private float playerSpeed = 5.0f;
+    [SerializeField]
+    private InventoryUI inventoryUI;
 
     private Vector2 movement;
+    private Inventory inventory;
+
 
     private void Start()
     {
         playerController = GetComponent<PlayerController>();
+    }
+
+    private void Awake()
+    {
+        inventory = new Inventory();
+        //inventory Object to UI invnetory
+        inventoryUI.SetInventory(inventory);
     }
 
     // Input
@@ -33,4 +44,6 @@ public class PlayerMovement : MonoBehaviour
         playerController.Rigidbody2D.MovePosition(playerController.Rigidbody2D.position 
             + movement * playerSpeed * Time.fixedDeltaTime);
     }
+
+
 }
