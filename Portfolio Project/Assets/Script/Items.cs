@@ -1,15 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class Items 
 {
     public enum ItemTypes
     {
-        Food_1,
-        Food_2,
-        Food_3,
-        Food_4,
+        Honey,
+        Apple,
+        Orange,
+        Ice,
     }
 
     public ItemTypes itemTypes;
@@ -20,14 +22,28 @@ public class Items
         switch (itemTypes)
         {
             default:
-            case ItemTypes.Food_1:
+            case ItemTypes.Honey:
                 return ItemAssets.itemAssets.HoneySprite;
-            case ItemTypes.Food_2:
+            case ItemTypes.Apple:
                 return ItemAssets.itemAssets.AppleSprite;
-            case ItemTypes.Food_3:
+            case ItemTypes.Orange:
                 return ItemAssets.itemAssets.OrangeSprite;
-            case ItemTypes.Food_4:
+            case ItemTypes.Ice:
                 return ItemAssets.itemAssets.IceSprite;
+        }
+    }
+
+    public bool IsStackable()
+    {
+        switch (itemTypes)
+        {
+            default:
+            case ItemTypes.Apple:
+            case ItemTypes.Orange:
+            case ItemTypes.Ice:
+                return true;
+            case ItemTypes.Honey:
+                return false;
         }
     }
 }

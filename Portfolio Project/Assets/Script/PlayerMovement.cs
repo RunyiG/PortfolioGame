@@ -26,10 +26,9 @@ public class PlayerMovement : MonoBehaviour
         //inventory Object to UI invnetory
         inventoryUI.SetInventory(inventory);
 
-        ItemWorld.SpawnItems(new Items { itemTypes = Items.ItemTypes.Food_1, amount = 1 }, new Vector3(5, 5, 0));
-        ItemWorld.SpawnItems(new Items { itemTypes = Items.ItemTypes.Food_2, amount = 1 }, new Vector3(-5, 5, 0));
-        ItemWorld.SpawnItems(new Items { itemTypes = Items.ItemTypes.Food_3, amount = 1 }, new Vector3(5, -5, 0));
-        ItemWorld.SpawnItems(new Items { itemTypes = Items.ItemTypes.Food_4, amount = 1 }, new Vector3(-5, -5, 0));
+        ItemWorld.SpawnItems(new Items { itemTypes = Items.ItemTypes.Honey, amount = 1 }, new Vector3(5, 5, 0));
+        ItemWorld.SpawnItems(new Items { itemTypes = Items.ItemTypes.Apple, amount = 1 }, new Vector3(0, 5, 0));
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

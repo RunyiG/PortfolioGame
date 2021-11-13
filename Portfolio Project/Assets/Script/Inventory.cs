@@ -12,15 +12,34 @@ public class Inventory : MonoBehaviour
     {
         itemList = new List<Items>();
 
-        AddItem(new Items { itemTypes = Items.ItemTypes.Food_1, amount = 1 });
-        AddItem(new Items { itemTypes = Items.ItemTypes.Food_2, amount = 1 });
-        AddItem(new Items { itemTypes = Items.ItemTypes.Food_3, amount = 1 });
-        AddItem(new Items { itemTypes = Items.ItemTypes.Food_4, amount = 1 });
+        AddItem(new Items { itemTypes = Items.ItemTypes.Honey, amount = 1 });
+        AddItem(new Items { itemTypes = Items.ItemTypes.Apple, amount = 1 });
+        AddItem(new Items { itemTypes = Items.ItemTypes.Orange, amount = 1 });
+        AddItem(new Items { itemTypes = Items.ItemTypes.Ice, amount = 1 });
     }
 
     public void AddItem(Items items)
     {
-        itemList.Add(items);
+        if (items.IsStackable())
+        {
+            bool ItemInInventory = false;
+            foreach (Items inventoryItem in itemList)
+            {
+                if (inventoryItem.itemTypes == items.itemTypes) 
+                {
+                    inventoryItem.amount += items.amount;
+                    ItemInInventory = true;
+                }
+            }
+            if (!ItemInInventory) 
+            {
+                itemList.Add(items);
+            }
+        }
+        else
+        {
+            itemList.Add(items);
+        }
         OnItemListChanged?.Invoke(this, EventArgs.Empty);
     }
 

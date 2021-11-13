@@ -57,7 +57,7 @@ public class InventoryUI : MonoBehaviour
 
             //num of item in inventory
             x++;
-            if (x > 4) 
+            if (x > 6) 
             {
                 x = 0;
                 y++;
