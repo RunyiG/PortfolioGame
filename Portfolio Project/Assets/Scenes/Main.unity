@@ -750,6 +750,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83b09121107df2248967a10ce0740dac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &337602981
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 337602983}
+  - component: {fileID: 337602982}
+  m_Layer: 0
+  m_Name: ItemAssets
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &337602982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 337602981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab6ae4ba447f20746b89529dd1ff90ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ItemWorldPf: {fileID: 33527509953109429, guid: 4ec01de8e5f846f4c800f10f41cfb6a8, type: 3}
+  HoneySprite: {fileID: 21300000, guid: 0d02907dfbc822642b7a89aacf79fbfe, type: 3}
+  AppleSprite: {fileID: 21300000, guid: 3e70baaea7989b348b2af4f73f2a2314, type: 3}
+  OrangeSprite: {fileID: 21300000, guid: 318da1eb849cd0f47bba2b80c9d99d71, type: 3}
+  IceSprite: {fileID: 21300000, guid: 9b891a32463b9854eafbec5b76cad630, type: 3}
+--- !u!4 &337602983
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 337602981}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2453.0293, y: 556.9433, z: -541.6422}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

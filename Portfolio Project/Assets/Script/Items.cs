@@ -10,10 +10,24 @@ public class Items
         Food_2,
         Food_3,
         Food_4,
-        Food_5,
-        Food_6,
     }
 
     public ItemTypes itemTypes;
     public int amount;
+
+    public Sprite GetSprite()
+    {
+        switch (itemTypes)
+        {
+            default:
+            case ItemTypes.Food_1:
+                return ItemAssets.itemAssets.HoneySprite;
+            case ItemTypes.Food_2:
+                return ItemAssets.itemAssets.AppleSprite;
+            case ItemTypes.Food_3:
+                return ItemAssets.itemAssets.OrangeSprite;
+            case ItemTypes.Food_4:
+                return ItemAssets.itemAssets.IceSprite;
+        }
+    }
 }
