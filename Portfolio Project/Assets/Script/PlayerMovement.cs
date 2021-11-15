@@ -55,8 +55,9 @@ public class PlayerMovement : MonoBehaviour
     //Movement
     void FixedUpdate()
     {
-        playerController.Rigidbody2D.MovePosition(playerController.Rigidbody2D.position 
-            + movement * playerSpeed * Time.fixedDeltaTime);
+        playerController.Rigidbody2D.velocity = movement.normalized * playerSpeed * Time.fixedDeltaTime;
+        //playerController.Rigidbody2D.MovePosition(playerController.Rigidbody2D.position 
+            //+ movement * playerSpeed * Time.fixedDeltaTime);
     }
 
 

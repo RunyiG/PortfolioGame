@@ -6,7 +6,7 @@ public class ItemSpawner : MonoBehaviour
 {
     public Items item;
 
-    private void Awake()
+    private void Start()
     {
         Debug.Log(item);
         Debug.Log(transform.position);
