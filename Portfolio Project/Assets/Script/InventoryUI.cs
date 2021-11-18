@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class InventoryUI : MonoBehaviour
 {
@@ -50,10 +51,20 @@ public class InventoryUI : MonoBehaviour
         {
             RectTransform itemSlotRectTransform = Instantiate(itemSlot, itemSlotList).GetComponent<RectTransform>();
             itemSlotRectTransform.gameObject.SetActive(true);
-            itemSlotRectTransform.anchoredPosition = new Vector2(x* itemSlotSize, y* itemSlotSize);
 
+            itemSlotRectTransform.anchoredPosition = new Vector2(x* itemSlotSize, y* itemSlotSize);
             Image image = itemSlotRectTransform.Find("itemImage").GetComponent<Image>();
             image.sprite = item.GetSprite();
+
+            TextMeshProUGUI itemText = itemSlotRectTransform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>();
+            if (item.amount > 1)
+            {
+                itemText.SetText(item.amount.ToString());
+            }
+            else
+            {
+                itemText.SetText(" ");
+            }
 
             //num of item in inventory
             x++;
