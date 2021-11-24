@@ -17,5 +17,5 @@ public class ItemAssets : MonoBehaviour
     public Sprite AppleSprite;
     public Sprite OrangeSprite;
     public Sprite IceSprite;
-
+    public Sprite HoneyRAppleSpr;
 }

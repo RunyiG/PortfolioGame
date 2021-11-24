@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour
+public class Inventory : MonoBehaviour/*,ItemContainer*/
 {
     private List<Items> itemList;
     public event EventHandler OnItemListChanged;
@@ -13,9 +13,6 @@ public class Inventory : MonoBehaviour
         itemList = new List<Items>();
 
         AddItem(new Items { itemTypes = Items.ItemTypes.Honey, amount = 1 });
-        AddItem(new Items { itemTypes = Items.ItemTypes.Apple, amount = 1 });
-        AddItem(new Items { itemTypes = Items.ItemTypes.Orange, amount = 1 });
-        AddItem(new Items { itemTypes = Items.ItemTypes.Ice, amount = 1 });
     }
 
     public void AddItem(Items items)
@@ -46,5 +43,43 @@ public class Inventory : MonoBehaviour
     public List<Items> GetItemList()
     {
         return itemList;
+    }
+
+    public int ItemCount(Items item)
+    {
+        int number = 0;
+        foreach (Items inventoryItem in itemList)
+        {
+            if (inventoryItem.itemTypes == item.itemTypes)
+            {
+                number++;
+            }
+        } 
+        return number;
+    }
+
+    public bool ComtainItem(Items items)
+    {
+        foreach (Items inventoryItem in itemList)
+        {
+            if (inventoryItem.itemTypes == items.itemTypes)
+            {              
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool RemoveItem(Items items)
+    {
+        foreach (Items inventoryItem in itemList)
+        {
+            if (inventoryItem.itemTypes == items.itemTypes)
+            {
+                items.amount = 0;
+                return true;
+            }
+        }
+        return false;
     }
 }

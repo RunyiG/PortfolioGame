@@ -12,9 +12,12 @@ public class Items
         Apple,
         Orange,
         Ice,
+        HoneyRoastedApples,
     }
 
     public ItemTypes itemTypes;
+
+    [Range(1,99)]
     public int amount;
 
     public Sprite GetSprite()
@@ -30,6 +33,8 @@ public class Items
                 return ItemAssets.itemAssets.OrangeSprite;
             case ItemTypes.Ice:
                 return ItemAssets.itemAssets.IceSprite;
+            case ItemTypes.HoneyRoastedApples:
+                return ItemAssets.itemAssets.HoneyRAppleSpr;
         }
     }
 
@@ -43,7 +48,8 @@ public class Items
             case ItemTypes.Ice:
                 return true;
             case ItemTypes.Honey:
-                return false;
+            case ItemTypes.HoneyRoastedApples:
+                return false;               
         }
     }
 }

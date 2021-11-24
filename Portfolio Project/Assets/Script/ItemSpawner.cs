@@ -8,9 +8,6 @@ public class ItemSpawner : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log(item);
-        Debug.Log(transform.position);
-
         ItemWorld.SpawnItems(item, transform.position);
         Destroy(gameObject);
     }

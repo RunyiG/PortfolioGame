@@ -35,7 +35,7 @@ public class InventoryUI : MonoBehaviour
     {
         foreach (Transform child in itemSlotList)
         {
-            if (child==itemSlot)
+            if (child == itemSlot)
             {
                 continue;
             }
@@ -44,6 +44,7 @@ public class InventoryUI : MonoBehaviour
                 Destroy(child.gameObject);
             }
         }
+
         int x = 0;
         int y = 0;
         float itemSlotSize = 240.0f;
@@ -66,9 +67,8 @@ public class InventoryUI : MonoBehaviour
                 itemText.SetText(" ");
             }
 
-            //num of item in inventory
             x++;
-            if (x > 6) 
+            if (x > 5) 
             {
                 x = 0;
                 y++;
