@@ -8,6 +8,8 @@ public class Inventory : MonoBehaviour/*,ItemContainer*/
     private List<Items> itemList;
     public event EventHandler OnItemListChanged;
 
+    public int MaxSlot { get { return 6; } }
+
     public Inventory()
     {
         itemList = new List<Items>();
@@ -15,8 +17,11 @@ public class Inventory : MonoBehaviour/*,ItemContainer*/
         AddItem(new Items { itemTypes = Items.ItemTypes.Honey, amount = 1 });
     }
 
-    public void AddItem(Items items)
+    public bool AddItem(Items items)
     {
+        if (MaxSlot <= itemList.Count)
+            return false;
+
         if (items.IsStackable())
         {
             bool ItemInInventory = false;
@@ -38,6 +43,7 @@ public class Inventory : MonoBehaviour/*,ItemContainer*/
             itemList.Add(items);
         }
         OnItemListChanged?.Invoke(this, EventArgs.Empty);
+        return true;
     }
 
     public List<Items> GetItemList()

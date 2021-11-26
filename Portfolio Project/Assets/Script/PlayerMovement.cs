@@ -34,8 +34,8 @@ public class PlayerMovement : MonoBehaviour
         ItemWorld itemWorld = collision.GetComponent<ItemWorld>();
         if (itemWorld!= null) 
         {
-            inventory.AddItem(itemWorld.GetItems());
-            itemWorld.Destory();
+            if (inventory.AddItem(itemWorld.GetItems()))
+                itemWorld.Destory();
         }
     }
 
