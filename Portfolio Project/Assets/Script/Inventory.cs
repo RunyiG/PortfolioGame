@@ -45,6 +45,18 @@ public class Inventory : MonoBehaviour/*,ItemContainer*/
         OnItemListChanged?.Invoke(this, EventArgs.Empty);
         return true;
     }
+    public bool RemoveItem(Items items)
+    {
+        foreach (Items inventoryItem in itemList)
+        {
+            if (inventoryItem.itemTypes == items.itemTypes)
+            {
+                items.amount = 0;
+                return true;
+            }
+        }
+        return false;
+    }
 
     public List<Items> GetItemList()
     {
@@ -76,16 +88,4 @@ public class Inventory : MonoBehaviour/*,ItemContainer*/
         return false;
     }
 
-    public bool RemoveItem(Items items)
-    {
-        foreach (Items inventoryItem in itemList)
-        {
-            if (inventoryItem.itemTypes == items.itemTypes)
-            {
-                items.amount = 0;
-                return true;
-            }
-        }
-        return false;
-    }
 }

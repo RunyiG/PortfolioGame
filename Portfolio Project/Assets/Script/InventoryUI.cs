@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using CodeMonkey.Utils;
 
 public class InventoryUI : MonoBehaviour
 {
@@ -52,6 +53,8 @@ public class InventoryUI : MonoBehaviour
         {
             RectTransform itemSlotRectTransform = Instantiate(itemSlot, itemSlotList).GetComponent<RectTransform>();
             itemSlotRectTransform.gameObject.SetActive(true);
+
+            //itemSlotRectTransform.GetComponent<Button_UI>().ClickFunc = () => { };
 
             itemSlotRectTransform.anchoredPosition = new Vector2(x* itemSlotSize, y* itemSlotSize);
             Image image = itemSlotRectTransform.Find("itemImage").GetComponent<Image>();
