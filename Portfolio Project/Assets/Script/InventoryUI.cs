@@ -9,6 +9,7 @@ using CodeMonkey.Utils;
 public class InventoryUI : MonoBehaviour
 {
     private Inventory inventory;
+    private PlayerMovement player;
 
     private Transform itemSlotList;
     private Transform itemSlot;
@@ -27,7 +28,12 @@ public class InventoryUI : MonoBehaviour
         InventoryUpdate();
     }
 
-    private void Inventory_OnItemListChanged(object snder,System.EventArgs e)
+    public void SetPlayer(PlayerMovement player)
+    {
+        this.player = player;
+    }
+
+    private void Inventory_OnItemListChanged(object snder, System.EventArgs e)
     {
         InventoryUpdate();
     }
@@ -53,10 +59,19 @@ public class InventoryUI : MonoBehaviour
         {
             RectTransform itemSlotRectTransform = Instantiate(itemSlot, itemSlotList).GetComponent<RectTransform>();
             itemSlotRectTransform.gameObject.SetActive(true);
+            //Use item
+            itemSlotRectTransform.GetComponent<Button_UI>().ClickFunc = () => {
+                inventory.UseItem(item);
+            };
+            //Drop item
+            itemSlotRectTransform.GetComponent<Button_UI>().MouseRightClickFunc = () => {
+                Items duplicateItem = new Items { itemTypes = item.itemTypes, amount = item.amount };
+                inventory.RemoveItem(item);
+                ItemWorld.DropItem(player.transform.position,duplicateItem);//
+            };
 
-            //itemSlotRectTransform.GetComponent<Button_UI>().ClickFunc = () => { };
 
-            itemSlotRectTransform.anchoredPosition = new Vector2(x* itemSlotSize, y* itemSlotSize);
+            itemSlotRectTransform.anchoredPosition = new Vector2(x * itemSlotSize, y * itemSlotSize);
             Image image = itemSlotRectTransform.Find("itemImage").GetComponent<Image>();
             image.sprite = item.GetSprite();
 
@@ -71,7 +86,7 @@ public class InventoryUI : MonoBehaviour
             }
 
             x++;
-            if (x > 5) 
+            if (x > 5)
             {
                 x = 0;
                 y++;

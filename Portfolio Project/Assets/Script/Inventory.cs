@@ -3,17 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour/*,ItemContainer*/
+public class Inventory : MonoBehaviour, ItemContainer
 {
     private List<Items> itemList;
     public event EventHandler OnItemListChanged;
 
+    private Action<Items> useItemAction;
+
     public int MaxSlot { get { return 6; } }
 
-    public Inventory()
+    public Inventory(Action<Items> useItemAction)
     {
+        this.useItemAction = useItemAction;
         itemList = new List<Items>();
-
         AddItem(new Items { itemTypes = Items.ItemTypes.Honey, amount = 1 });
     }
 
@@ -45,18 +47,38 @@ public class Inventory : MonoBehaviour/*,ItemContainer*/
         OnItemListChanged?.Invoke(this, EventArgs.Empty);
         return true;
     }
+
     public bool RemoveItem(Items items)
     {
-        foreach (Items inventoryItem in itemList)
+        if (items.IsStackable())
         {
-            if (inventoryItem.itemTypes == items.itemTypes)
+            Items ItemInInventory = null;
+            foreach (Items inventoryItem in itemList)
             {
-                items.amount = 0;
-                return true;
+                if (inventoryItem.itemTypes == items.itemTypes)
+                {
+                    inventoryItem.amount -= items.amount;
+                    ItemInInventory = inventoryItem;
+                }
+            }
+            if (ItemInInventory != null && ItemInInventory.amount <= 0)  
+            {
+                itemList.Remove(ItemInInventory);
             }
         }
-        return false;
+        else
+        {
+            itemList.Remove(items);
+        }
+        OnItemListChanged?.Invoke(this, EventArgs.Empty);
+        return true;
     }
+
+    public void UseItem(Items item)
+    {
+        useItemAction(item);
+    }
+
 
     public List<Items> GetItemList()
     {
@@ -87,5 +109,4 @@ public class Inventory : MonoBehaviour/*,ItemContainer*/
         }
         return false;
     }
-
 }
