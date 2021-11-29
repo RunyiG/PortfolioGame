@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour, ItemContainer
+public class Inventory : MonoBehaviour
 {
     private List<Items> itemList;
     public event EventHandler OnItemListChanged;
@@ -85,28 +85,4 @@ public class Inventory : MonoBehaviour, ItemContainer
         return itemList;
     }
 
-    public int ItemCount(Items item)
-    {
-        int number = 0;
-        foreach (Items inventoryItem in itemList)
-        {
-            if (inventoryItem.itemTypes == item.itemTypes)
-            {
-                number++;
-            }
-        } 
-        return number;
-    }
-
-    public bool ComtainItem(Items items)
-    {
-        foreach (Items inventoryItem in itemList)
-        {
-            if (inventoryItem.itemTypes == items.itemTypes)
-            {              
-                return true;
-            }
-        }
-        return false;
-    }
 }

@@ -10,6 +10,7 @@ public class CraftingUI : MonoBehaviour
     private Transform[] slotTransformArray;
     private Transform outputslotTransform;
     private Transform itemContainer;
+    private CraftingSystem craftingSystem;
 
     private void Start()
     {
@@ -28,6 +29,19 @@ public class CraftingUI : MonoBehaviour
 
     }
 
+    public void SetCraftingSystem(CraftingSystem craftingSystem)
+    {
+        this.craftingSystem = craftingSystem;
+
+        craftingSystem.OnSlotsChanged += craftingSystem_OnSlotsChanged;
+        UpdateCraftUIVisual();
+    }
+
+    private void craftingSystem_OnSlotsChanged(object sender,System.EventArgs eventArgs)
+    {
+        UpdateCraftUIVisual();
+    }
+
     private void CreatItem(Items item, int slot)
     {
         Transform itemTransform = Instantiate(ItemPf, itemContainer);
@@ -40,5 +54,25 @@ public class CraftingUI : MonoBehaviour
         Transform itemTransform = Instantiate(ItemPf, itemContainer);
         RectTransform itemRectTransform = itemTransform.GetComponent<RectTransform>();
         itemRectTransform.anchoredPosition = outputslotTransform.GetComponent<RectTransform>().anchoredPosition;
+    }
+
+    private void UpdateCraftUIVisual()
+    {
+        foreach (Transform child in itemContainer)
+        {
+            Destroy(child.gameObject);
+        }
+        for (int i = 0; i < CraftingSystem.SLOT_SIZE; i++)
+        {
+            if (!craftingSystem.IsEmpty(i))
+            {
+                CreatItem(craftingSystem.GetItems(i), i);
+            }
+        }
+
+        if (craftingSystem.GetOutputItems() != null) 
+        {
+            CreatItemOutput(craftingSystem.GetOutputItems());
+        }
     }
 }

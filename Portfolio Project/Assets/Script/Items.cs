@@ -8,6 +8,7 @@ public class Items
 {
     public enum ItemTypes
     {
+        N,
         Honey,
         Apple,
         Orange,
