@@ -8,7 +8,7 @@ public class Inventory : MonoBehaviour
     private List<Items> itemList;
     public event EventHandler OnItemListChanged;
 
-    private Action<Items> useItemAction;
+    public Action<Items> useItemAction;
 
     public int MaxSlot { get { return 6; } }
 
@@ -76,7 +76,6 @@ public class Inventory : MonoBehaviour
 
     public void UseItem(Items item)
     {
-        useItemAction(item);
     }
 
 

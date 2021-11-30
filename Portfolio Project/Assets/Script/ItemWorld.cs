@@ -19,8 +19,9 @@ public class ItemWorld : MonoBehaviour
     public static ItemWorld DropItem(Vector3 dropPos, Items item)
     {
         Vector3 randomDir = UtilsClass.GetRandomDir();
-        ItemWorld itemworld = SpawnItems(item, dropPos + randomDir * 5.0f);
-        itemworld.GetComponent<Rigidbody2D>().AddForce(randomDir * 5.0f, ForceMode2D.Impulse);
+        ItemWorld itemworld = SpawnItems(item, dropPos + randomDir * 5f);
+        Vector3 dropposition  = dropPos + Vector3.right;
+        itemworld.transform.position = dropposition;
         return itemworld;
     }
 

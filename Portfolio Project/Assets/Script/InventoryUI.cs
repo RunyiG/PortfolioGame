@@ -10,6 +10,7 @@ public class InventoryUI : MonoBehaviour
 {
     private Inventory inventory;
     private PlayerMovement player;
+    public CraftingUI craftUI;
 
     private Transform itemSlotList;
     private Transform itemSlot;
@@ -57,11 +58,15 @@ public class InventoryUI : MonoBehaviour
         float itemSlotSize = 240.0f;
         foreach (Items item in inventory.GetItemList())
         {
+            int i = 0;
             RectTransform itemSlotRectTransform = Instantiate(itemSlot, itemSlotList).GetComponent<RectTransform>();
             itemSlotRectTransform.gameObject.SetActive(true);
             //Use item
             itemSlotRectTransform.GetComponent<Button_UI>().ClickFunc = () => {
-                inventory.UseItem(item);
+                craftUI.CreatItem(item, i);
+                i++;
+                i %= 2;
+                inventory.RemoveItem(item);
             };
             //Drop item
             itemSlotRectTransform.GetComponent<Button_UI>().MouseRightClickFunc = () => {

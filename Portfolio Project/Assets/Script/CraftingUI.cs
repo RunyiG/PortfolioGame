@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class CraftingUI : MonoBehaviour
 {
@@ -12,6 +14,13 @@ public class CraftingUI : MonoBehaviour
     private Transform itemContainer;
     private CraftingSystem craftingSystem;
 
+    [SerializeField]
+    private Image ItemImage_1;
+    [SerializeField]
+    private Image ItemImage_2;
+    [SerializeField]
+    private Image CraftedImage;
+
     private void Start()
     {
         Transform CraftSlot = transform.Find("CraftSlot");
@@ -22,11 +31,9 @@ public class CraftingUI : MonoBehaviour
             slotTransformArray[i] = CraftSlot.Find("RecipeSlot_" + i);
         }
         outputslotTransform = transform.Find("OutputSlot");
-
-        CreatItem(new Items { itemTypes = Items.ItemTypes.Apple }, 0);
-        CreatItem(new Items { itemTypes = Items.ItemTypes.Honey }, 1);
-        CreatItemOutput(new Items { itemTypes = Items.ItemTypes.HoneyRoastedApples });
-
+        //CreatItem(new Items { itemTypes = Items.ItemTypes.Apple }, 0);
+        //CreatItem(new Items { itemTypes = Items.ItemTypes.Honey }, 1);
+        //CreatItemOutput(new Items { itemTypes = Items.ItemTypes.HoneyRoastedApples });
     }
 
     public void SetCraftingSystem(CraftingSystem craftingSystem)
@@ -42,18 +49,28 @@ public class CraftingUI : MonoBehaviour
         UpdateCraftUIVisual();
     }
 
-    private void CreatItem(Items item, int slot)
+    public void CreatItem(Items item, int slot)
     {
         Transform itemTransform = Instantiate(ItemPf, itemContainer);
         RectTransform itemRectTransform = itemTransform.GetComponent<RectTransform>();
-        itemRectTransform.anchoredPosition = slotTransformArray[slot].GetComponent<RectTransform>().anchoredPosition;
+        if (slot == 0)
+        {
+            ItemImage_1.sprite = item.GetSprite();
+        }
+        else 
+        {
+            ItemImage_2.sprite = item.GetSprite();
+        }
+       // itemRectTransform.anchoredPosition = slotTransformArray[slot].GetComponent<RectTransform>().anchoredPosition;
     }
 
     private void CreatItemOutput(Items item)
     {
         Transform itemTransform = Instantiate(ItemPf, itemContainer);
         RectTransform itemRectTransform = itemTransform.GetComponent<RectTransform>();
-        itemRectTransform.anchoredPosition = outputslotTransform.GetComponent<RectTransform>().anchoredPosition;
+        CraftedImage.sprite = item.GetSprite();
+        itemTransform.GetComponent<ItemWorld>().SetItem(item);
+        //itemRectTransform.anchoredPosition = outputslotTransform.GetComponent<RectTransform>().anchoredPosition;
     }
 
     private void UpdateCraftUIVisual()

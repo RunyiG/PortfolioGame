@@ -23,8 +23,8 @@ public class CraftingSystem: ItemContainer
         recipeDictionary = new Dictionary<Items.ItemTypes, Items.ItemTypes[]>();
 
         Items.ItemTypes[] recipe = new Items.ItemTypes[SLOT_SIZE];
-        HoneyApple[0] = Items.ItemTypes.Honey;
-        HoneyApple[1] = Items.ItemTypes.Apple;
+        HoneyApple[0] = Items.ItemTypes.Apple;
+        HoneyApple[1] = Items.ItemTypes.Honey;
         recipeDictionary[Items.ItemTypes.HoneyRoastedApples] = recipe;
 
         //HoneyApple = new Items.ItemTypes[SLOT_SIZE];
