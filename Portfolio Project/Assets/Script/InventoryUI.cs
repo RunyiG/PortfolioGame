@@ -21,6 +21,7 @@ public class InventoryUI : MonoBehaviour
         itemSlotList = transform.Find("ItemSlotList");
         itemSlot = itemSlotList.Find("ItemSlot");
         itemSlot.gameObject.SetActive(false);
+        itemSlot.GetComponent<ItemSlotUI>().OnItemDropped += Inventory_OnItemListChanged;
     }
 
     public void SetInventory(Inventory inventory)
@@ -62,8 +63,10 @@ public class InventoryUI : MonoBehaviour
         {
             Items item = inventorySlot.GetItem();
             //int i = 0;
-            RectTransform itemSlotRectTransform = Instantiate(itemSlot, itemSlotList).GetComponent<RectTransform>();
+            Transform slot = Instantiate(itemSlot, itemSlotList);
+            RectTransform itemSlotRectTransform = slot.GetComponent<RectTransform>();
             itemSlotRectTransform.gameObject.SetActive(true);
+            //itemSlotRectTransform.transform.parent = itemSlot.transform;
 
             itemSlotRectTransform.GetComponent<Button_UI>().ClickFunc = () => {
                 //craftUI.CreatItem(item, i);
