@@ -3,13 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CraftingSystem: ItemContainer
+public class CraftingSystem : ItemContainer
 {
     public event EventHandler OnSlotsChanged;
 
     public const int SLOT_SIZE = 2;
-    
-    private Items.ItemTypes[] HoneyApple;
+
+    //private Items.ItemTypes[] HoneyApple;
     private Dictionary<Items.ItemTypes, Items.ItemTypes[]> recipeDictionary;
 
     private Items[] itemArray;
@@ -21,10 +21,9 @@ public class CraftingSystem: ItemContainer
         itemArray = new Items[SLOT_SIZE];
 
         recipeDictionary = new Dictionary<Items.ItemTypes, Items.ItemTypes[]>();
-
         Items.ItemTypes[] recipe = new Items.ItemTypes[SLOT_SIZE];
-        HoneyApple[0] = Items.ItemTypes.Apple;
-        HoneyApple[1] = Items.ItemTypes.Honey;
+        recipe[0] = Items.ItemTypes.Apple;
+        recipe[1] = Items.ItemTypes.Honey;
         recipeDictionary[Items.ItemTypes.HoneyRoastedApples] = recipe;
 
         //HoneyApple = new Items.ItemTypes[SLOT_SIZE];
@@ -45,6 +44,11 @@ public class CraftingSystem: ItemContainer
 
     public void SetItem(Items item, int slot)
     {
+        if (item != null) 
+        {
+            item.RemoveFromItemContainer();
+            item.SetItemContainer(this);
+        }
         itemArray[slot] = item;
         CreateOutput();
         OnSlotsChanged?.Invoke(this, EventArgs.Empty);
@@ -58,8 +62,16 @@ public class CraftingSystem: ItemContainer
 
     public void DecreaseItemAmount(int slot)
     {
-        GetItems(slot).amount--;
-        OnSlotsChanged?.Invoke(this, EventArgs.Empty);
+        if (GetItems(slot) != null) 
+        {
+            GetItems(slot).amount--;
+            if (GetItems(slot).amount == 0) 
+            {
+                RemoveItem(slot);
+            }
+
+            OnSlotsChanged?.Invoke(this, EventArgs.Empty);
+        }
     }
 
     public void RemoveItem(int slot)
@@ -76,7 +88,7 @@ public class CraftingSystem: ItemContainer
         }
         else
         {
-            if (item.itemTypes==GetItems(slot).itemTypes)
+            if (item.itemTypes == GetItems(slot).itemTypes)
             {
                 IncreaseItemAmount(slot);
                 return true;
@@ -90,29 +102,40 @@ public class CraftingSystem: ItemContainer
 
     private Items.ItemTypes GetRecipeOutput()
     {
-        for (int i = 0; i < SLOT_SIZE; i++)
+        foreach (Items.ItemTypes recipes in recipeDictionary.Keys)
         {
-            if (HoneyApple[i]!=Items.ItemTypes.N)
+            Items.ItemTypes[] recipe = recipeDictionary[recipes];
+            bool correctRecipe = true;
+            for (int i = 0; i < SLOT_SIZE; i++)
             {
-                if (IsEmpty(i) || GetItems(i).itemTypes != HoneyApple[i]) 
+                if (recipe[i] != Items.ItemTypes.N)
                 {
-                    return Items.ItemTypes.N;
+                    if (IsEmpty(i) || GetItems(i).itemTypes != recipe[i])
+                    {
+                        correctRecipe = false;
+                    }
                 }
             }
+            if (correctRecipe) 
+            {
+                return recipes;
+            }
         }
-        return Items.ItemTypes.HoneyRoastedApples;
+
+        return Items.ItemTypes.N;
     }
 
     private void CreateOutput()
     {
         Items.ItemTypes recipeOutput = GetRecipeOutput();
-        if (recipeOutput==Items.ItemTypes.N)
+        if (recipeOutput == Items.ItemTypes.N)
         {
             ItemOutput = null;
         }
         else
         {
             ItemOutput = new Items { itemTypes = recipeOutput };
+            ItemOutput.SetItemContainer(this);
         }
     }
 
@@ -131,16 +154,17 @@ public class CraftingSystem: ItemContainer
 
     public void RemoveItem(Items items)
     {
-        if (items == ItemOutput) 
+        if (items == ItemOutput)
         {
             UseRecipeItems();
             CreateOutput();
+            OnSlotsChanged?.Invoke(this, EventArgs.Empty);
         }
         else
         {
             for (int i = 0; i < SLOT_SIZE; i++)
             {
-                if (GetItems(i) == items) 
+                if (GetItems(i) == items)
                 {
                     RemoveItem(i);
                 }
@@ -148,14 +172,13 @@ public class CraftingSystem: ItemContainer
         }
     }
 
-    public void AddItem(Items items)
+    public void AddItems(Items items)
     {
-        throw new NotImplementedException();
     }
 
     public bool CanAdd()
     {
-        throw new NotImplementedException();
+        return false;
     }
 }
 

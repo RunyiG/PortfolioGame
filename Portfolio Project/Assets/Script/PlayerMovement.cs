@@ -10,23 +10,32 @@ public class PlayerMovement : MonoBehaviour
     private float playerSpeed = 5.0f;
     [SerializeField]
     private InventoryUI inventoryUI;
+    [SerializeField]
+    private CraftingUI craftingUI;
 
     private Vector2 movement;
     private Inventory inventory;
 
     private Player player;
 
+    //private CraftingSystem craftingSystem;
+
     private void Start()
     {
         playerController = GetComponent<PlayerController>();
+        CraftingSystem craftingSystem = new CraftingSystem();
+        craftingUI.SetCraftingSystem(craftingSystem);
     }
 
     private void Awake()
     {
-        inventory = new Inventory(UseItem);
+        inventory = new Inventory(UseItem,6);
         inventoryUI.SetPlayer(this);
         //inventory Object to UI invnetory
-        inventoryUI.SetInventory(inventory);       
+        inventoryUI.SetInventory(inventory);
+
+        //CraftingSystem craftingSystem = new CraftingSystem();
+        //craftingUI.SetCraftingSystem(craftingSystem);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

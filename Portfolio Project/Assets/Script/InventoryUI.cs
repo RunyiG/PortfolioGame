@@ -1,10 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-
-using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 using CodeMonkey.Utils;
+using UnityEngine;
+
 
 public class InventoryUI : MonoBehaviour
 {
@@ -15,10 +13,14 @@ public class InventoryUI : MonoBehaviour
     private Transform itemSlotList;
     private Transform itemSlot;
 
+    [SerializeField]
+    private Transform ItemPf;
+
     private void Awake()
     {
         itemSlotList = transform.Find("ItemSlotList");
         itemSlot = itemSlotList.Find("ItemSlot");
+        itemSlot.gameObject.SetActive(false);
     }
 
     public void SetInventory(Inventory inventory)
@@ -34,7 +36,7 @@ public class InventoryUI : MonoBehaviour
         this.player = player;
     }
 
-    private void Inventory_OnItemListChanged(object snder, System.EventArgs e)
+    private void Inventory_OnItemListChanged(object sender, System.EventArgs e)
     {
         InventoryUpdate();
     }
@@ -55,40 +57,60 @@ public class InventoryUI : MonoBehaviour
 
         int x = 0;
         int y = 0;
-        float itemSlotSize = 240.0f;
-        foreach (Items item in inventory.GetItemList())
+        float itemSlotgapSize = 240.0f;
+        foreach (Inventory.InventorySlot inventorySlot in inventory.GetInventorySlotArray())
         {
-            int i = 0;
+            Items item = inventorySlot.GetItem();
+            //int i = 0;
             RectTransform itemSlotRectTransform = Instantiate(itemSlot, itemSlotList).GetComponent<RectTransform>();
             itemSlotRectTransform.gameObject.SetActive(true);
-            //Use item
+
             itemSlotRectTransform.GetComponent<Button_UI>().ClickFunc = () => {
-                craftUI.CreatItem(item, i);
-                i++;
-                i %= 2;
-                inventory.RemoveItem(item);
+                //craftUI.CreatItem(item, i);
+                //i++;
+                //i %= 2;
+                //inventory.RemoveItem(item);
             };
             //Drop item
             itemSlotRectTransform.GetComponent<Button_UI>().MouseRightClickFunc = () => {
                 Items duplicateItem = new Items { itemTypes = item.itemTypes, amount = item.amount };
                 inventory.RemoveItem(item);
-                ItemWorld.DropItem(player.transform.position,duplicateItem);//
+                ItemWorld.DropItem(player.transform.position,duplicateItem);
             };
 
 
-            itemSlotRectTransform.anchoredPosition = new Vector2(x * itemSlotSize, y * itemSlotSize);
-            Image image = itemSlotRectTransform.Find("itemImage").GetComponent<Image>();
-            image.sprite = item.GetSprite();
+            itemSlotRectTransform.anchoredPosition = new Vector2(x * itemSlotgapSize, -y * itemSlotgapSize);
+            //Image image = itemSlotRectTransform.Find("itemImage").GetComponent<Image>();
+            //image.sprite = item.GetSprite();
 
-            TextMeshProUGUI itemText = itemSlotRectTransform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>();
-            if (item.amount > 1)
+            if (!inventorySlot.IsEmpty())
             {
-                itemText.SetText(item.amount.ToString());
+                // Have Items
+                Transform uiItemTransform = Instantiate(ItemPf, itemSlotList);
+                uiItemTransform.GetComponent<RectTransform>().anchoredPosition = itemSlotRectTransform.anchoredPosition;
+                ItemUI itemUI = uiItemTransform.GetComponent<ItemUI>();
+                itemUI.SetItem(item);
             }
-            else
-            {
-                itemText.SetText(" ");
-            }
+
+            Inventory.InventorySlot tmpInventorySlot = inventorySlot;
+
+            ItemSlotUI itemSlotUI = itemSlotRectTransform.GetComponent<ItemSlotUI>();
+            itemSlotUI.SetOnDropAction(() => {
+                // Dropped on this UI Item Slot
+                Items draggedItem = ItemDragUI.Instance.GetItem();
+                draggedItem.RemoveFromItemContainer();
+                inventory.AddItem(draggedItem, tmpInventorySlot);
+            });
+
+            //TextMeshProUGUI itemText = itemSlotRectTransform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>();
+            //if (item.amount > 1)
+            //{
+            //    itemText.SetText(item.amount.ToString());
+            //}
+            //else
+            //{
+            //    itemText.SetText(" ");
+            //}
 
             x++;
             if (x > 5)
@@ -98,10 +120,4 @@ public class InventoryUI : MonoBehaviour
             }
         }
     }
-
-
-
-
-
-
 }

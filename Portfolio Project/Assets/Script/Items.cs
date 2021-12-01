@@ -21,7 +21,42 @@ public class Items
     [Range(1,99)]
     public int amount;
 
+    private ItemContainer itemContainer;
+
+
+    public void SetItemContainer(ItemContainer itemContainer)
+    {
+        this.itemContainer = itemContainer;
+    }
+
+    public ItemContainer GetItemContainer()
+    {
+        return itemContainer;
+    }
+
+    public void RemoveFromItemContainer()
+    {
+        if (itemContainer != null)
+        {
+            // Remove from current Item container
+            itemContainer.RemoveItem(this);
+        }
+    }
+
+    public void MoveToAnotherItemContainer(ItemContainer newItemContainer)
+    {
+        RemoveFromItemContainer();
+        // Add to new Item container
+        newItemContainer.AddItems(this);
+    }
+
+
     public Sprite GetSprite()
+    {
+        return GetSprite(itemTypes);
+    }
+
+    public static Sprite GetSprite(ItemTypes itemTypes)
     {
         switch (itemTypes)
         {
@@ -39,7 +74,8 @@ public class Items
         }
     }
 
-    public bool IsStackable()
+
+    public bool IsStackable(ItemTypes itemType)
     {
         switch (itemTypes)
         {
@@ -52,5 +88,15 @@ public class Items
             case ItemTypes.HoneyRoastedApples:
                 return false;               
         }
+    }
+
+    public bool IsStackable()
+    {
+        return IsStackable(itemTypes);
+    }
+
+    public override string ToString()
+    {
+        return itemTypes.ToString();
     }
 }
