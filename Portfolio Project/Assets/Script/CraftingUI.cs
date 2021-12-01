@@ -63,6 +63,9 @@ public class CraftingUI : MonoBehaviour
         //else { ItemImage_2.sprite = item.GetSprite();}
         itemRectTransform.anchoredPosition = slotTransformArray[slot].GetComponent<RectTransform>().anchoredPosition;
         itemTransform.GetComponent<ItemUI>().SetItem(item);
+        Vector3 scaleChange;
+        scaleChange = new Vector3(-0.5f, -0.5f, 1.0f);
+        itemTransform.localScale += scaleChange;
     }
 
     private void CreatItemOutput(Items item)
@@ -73,6 +76,9 @@ public class CraftingUI : MonoBehaviour
         //itemTransform.GetComponent<ItemWorld>().SetItem(item);
         itemRectTransform.anchoredPosition = outputslotTransform.GetComponent<RectTransform>().anchoredPosition;
         itemTransform.GetComponent<ItemUI>().SetItem(item);
+        Vector3 scaleChange;
+        scaleChange = new Vector3(-0.3f, -0.3f, 1.0f);
+        itemTransform.localScale += scaleChange;
     }
 
     private void UpdateCraftUIVisual()
