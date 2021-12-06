@@ -21,10 +21,21 @@ public class CraftingSystem : ItemContainer
         itemArray = new Items[SLOT_SIZE];
 
         recipeDictionary = new Dictionary<Items.ItemTypes, Items.ItemTypes[]>();
+
         Items.ItemTypes[] recipe = new Items.ItemTypes[SLOT_SIZE];
         recipe[0] = Items.ItemTypes.Apple;
         recipe[1] = Items.ItemTypes.Honey;
         recipeDictionary[Items.ItemTypes.HoneyRoastedApples] = recipe;
+
+        recipe = new Items.ItemTypes[SLOT_SIZE];
+        recipe[0] = Items.ItemTypes.Apple;
+        recipe[1] = Items.ItemTypes.Orange;
+        recipeDictionary[Items.ItemTypes.AppleOrange] = recipe;
+
+        recipe = new Items.ItemTypes[SLOT_SIZE];
+        recipe[0] = Items.ItemTypes.Honey;
+        recipe[1] = Items.ItemTypes.Orange;
+        recipeDictionary[Items.ItemTypes.OrangeHoney] = recipe;
 
         //HoneyApple = new Items.ItemTypes[SLOT_SIZE];
         //HoneyApple[0] = Items.ItemTypes.Honey;      HoneyApple[1] = Items.ItemTypes.Apple;

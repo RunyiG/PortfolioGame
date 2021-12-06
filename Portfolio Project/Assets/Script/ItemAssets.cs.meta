@@ -3,7 +3,13 @@ guid: ab6ae4ba447f20746b89529dd1ff90ed
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - ItemWorldPf: {fileID: 33527509953109429, guid: 4ec01de8e5f846f4c800f10f41cfb6a8, type: 3}
+  - HoneySprite: {fileID: 21300000, guid: 0d02907dfbc822642b7a89aacf79fbfe, type: 3}
+  - AppleSprite: {fileID: 21300000, guid: 3e70baaea7989b348b2af4f73f2a2314, type: 3}
+  - OrangeSprite: {fileID: 21300000, guid: 318da1eb849cd0f47bba2b80c9d99d71, type: 3}
+  - IceSprite: {fileID: 21300000, guid: 9b891a32463b9854eafbec5b76cad630, type: 3}
+  - HoneyRAppleSpr: {fileID: 21300000, guid: da5930954c155b34bbf342d9ad445e90, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

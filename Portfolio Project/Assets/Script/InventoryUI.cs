@@ -9,6 +9,7 @@ public class InventoryUI : MonoBehaviour
     private Inventory inventory;
     private PlayerMovement player;
     public CraftingUI craftUI;
+    private IShop shopping;
 
     private Transform itemSlotList;
     private Transform itemSlot;
@@ -68,12 +69,14 @@ public class InventoryUI : MonoBehaviour
             itemSlotRectTransform.gameObject.SetActive(true);
             //itemSlotRectTransform.transform.parent = itemSlot.transform;
 
-            itemSlotRectTransform.GetComponent<Button_UI>().ClickFunc = () => {
-                //craftUI.CreatItem(item, i);
-                //i++;
-                //i %= 2;
-                //inventory.RemoveItem(item);
+            //Sell item
+            itemSlotRectTransform.GetComponent<Button_UI>().ClickFunc = () => 
+            {
+                Items duplicateItem = new Items { itemTypes = item.itemTypes, amount = item.amount };
+                TrySellItem(item.itemTypes);
+                inventory.RemoveItem(item);
             };
+
             //Drop item
             itemSlotRectTransform.GetComponent<Button_UI>().MouseRightClickFunc = () => {
                 Items duplicateItem = new Items { itemTypes = item.itemTypes, amount = item.amount };
@@ -83,8 +86,6 @@ public class InventoryUI : MonoBehaviour
 
 
             itemSlotRectTransform.anchoredPosition = new Vector2(x * itemSlotgapSize, -y * itemSlotgapSize);
-            //Image image = itemSlotRectTransform.Find("itemImage").GetComponent<Image>();
-            //image.sprite = item.GetSprite();
 
             if (!inventorySlot.IsEmpty())
             {
@@ -105,16 +106,6 @@ public class InventoryUI : MonoBehaviour
                 inventory.AddItem(draggedItem, tmpInventorySlot);
             });
 
-            //TextMeshProUGUI itemText = itemSlotRectTransform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>();
-            //if (item.amount > 1)
-            //{
-            //    itemText.SetText(item.amount.ToString());
-            //}
-            //else
-            //{
-            //    itemText.SetText(" ");
-            //}
-
             x++;
             if (x > 5)
             {
@@ -123,4 +114,11 @@ public class InventoryUI : MonoBehaviour
             }
         }
     }
+
+    private void TrySellItem(Items.ItemTypes itemType)
+    {
+        shopping.SellItem(itemType);
+    }
+
+
 }

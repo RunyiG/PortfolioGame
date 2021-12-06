@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Inventory: ItemContainer
+public class Inventory: ItemContainer, IShop
 {
     private List<Items> itemList;
     public Action<Items> useItemAction;
@@ -199,5 +199,18 @@ public class Inventory: ItemContainer
         return inventorySlotArray;
     }
 
+    public void BoughtItem(Items.ItemTypes itemTypes)
+    {
+        Debug.Log("Buy" + itemTypes);
+    }
 
+    public void SellItem(Items.ItemTypes itemTypes)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool TryBuy(int coinAmount)
+    {
+        throw new NotImplementedException();
+    }
 }

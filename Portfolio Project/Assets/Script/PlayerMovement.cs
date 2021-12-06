@@ -67,6 +67,12 @@ public class PlayerMovement : MonoBehaviour
             case Items.ItemTypes.HoneyRoastedApples:
                 inventory.RemoveItem(new Items { itemTypes = Items.ItemTypes.HoneyRoastedApples, amount = 1 });
                 break;
+            case Items.ItemTypes.AppleOrange:
+                inventory.RemoveItem(new Items { itemTypes = Items.ItemTypes.AppleOrange, amount = 1 });
+                break;
+            case Items.ItemTypes.OrangeHoney:
+                inventory.RemoveItem(new Items { itemTypes = Items.ItemTypes.OrangeHoney, amount = 1 });
+                break;
         }
     }
 

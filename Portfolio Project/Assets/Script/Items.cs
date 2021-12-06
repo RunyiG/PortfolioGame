@@ -14,6 +14,8 @@ public class Items
         Orange,
         Ice,
         HoneyRoastedApples,
+        AppleOrange,
+        OrangeHoney,
     }
 
     public ItemTypes itemTypes;
@@ -71,6 +73,10 @@ public class Items
                 return ItemAssets.itemAssets.IceSprite;
             case ItemTypes.HoneyRoastedApples:
                 return ItemAssets.itemAssets.HoneyRAppleSpr;
+            case ItemTypes.AppleOrange:
+                return ItemAssets.itemAssets.AppleOrange;
+            case ItemTypes.OrangeHoney:
+                return ItemAssets.itemAssets.OrangeHoney;
         }
     }
 
@@ -86,6 +92,8 @@ public class Items
                 return true;
             case ItemTypes.Honey:
             case ItemTypes.HoneyRoastedApples:
+            case ItemTypes.AppleOrange:
+            case ItemTypes.OrangeHoney:
                 return false;               
         }
     }
@@ -98,5 +106,29 @@ public class Items
     public override string ToString()
     {
         return itemTypes.ToString();
+    }
+
+    public static int GetPrice(ItemTypes itemTypes)
+    {
+        switch (itemTypes)
+        {
+            default:
+            case ItemTypes.N:
+                return 0;
+            case ItemTypes.Honey:
+                return 5;
+            case ItemTypes.Apple:
+                return 2;
+            case ItemTypes.Orange:
+                return 2;
+            case ItemTypes.Ice:
+                return 4;
+            case ItemTypes.HoneyRoastedApples:
+                return 10;
+            case ItemTypes.AppleOrange:
+                return 6;
+            case ItemTypes.OrangeHoney:
+                return 10;
+        }
     }
 }
