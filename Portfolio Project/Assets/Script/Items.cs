@@ -118,6 +118,30 @@ public class Items
             case ItemTypes.Honey:
                 return 5;
             case ItemTypes.Apple:
+                return 3;
+            case ItemTypes.Orange:
+                return 3;
+            case ItemTypes.Ice:
+                return 7;
+            case ItemTypes.HoneyRoastedApples:
+                return 10;
+            case ItemTypes.AppleOrange:
+                return 6;
+            case ItemTypes.OrangeHoney:
+                return 10;
+        }
+    }
+
+    public static int GetSellPrice(ItemTypes itemTypes)
+    {
+        switch (itemTypes)
+        {
+            default:
+            case ItemTypes.N:
+                return 0;
+            case ItemTypes.Honey:
+                return 4;
+            case ItemTypes.Apple:
                 return 2;
             case ItemTypes.Orange:
                 return 2;

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Inventory: ItemContainer, IShop
+public class Inventory: ItemContainer
 {
     private List<Items> itemList;
     public Action<Items> useItemAction;
@@ -11,6 +11,7 @@ public class Inventory: ItemContainer, IShop
 
     public event EventHandler OnItemListChanged;
 
+    public int coin;
     public int MaxSlot { get { return 6; } }
 
     public Inventory(Action<Items> useItemAction, int slotCount)
@@ -199,18 +200,4 @@ public class Inventory: ItemContainer, IShop
         return inventorySlotArray;
     }
 
-    public void BoughtItem(Items.ItemTypes itemTypes)
-    {
-        Debug.Log("Buy" + itemTypes);
-    }
-
-    public void SellItem(Items.ItemTypes itemTypes)
-    {
-        throw new NotImplementedException();
-    }
-
-    public bool TryBuy(int coinAmount)
-    {
-        throw new NotImplementedException();
-    }
 }

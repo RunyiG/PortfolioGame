@@ -9,7 +9,9 @@ public class ShopUI : MonoBehaviour
 {
     private Transform shopSlotList;
     private Transform shopSlot;
-    private IShop shopping;
+
+    public GameObject inventoryObj;
+    public  Inventory inventory;
 
     public int coins;
 
@@ -18,12 +20,14 @@ public class ShopUI : MonoBehaviour
         shopSlotList = transform.Find("ShopSlotList");
         shopSlot = shopSlotList.Find("ShopSlot");
         shopSlot.gameObject.SetActive(true);
+        
     }
 
     private void Start()
     {
         CreateItemShopSlot(Items.ItemTypes.Honey, Items.GetSprite(Items.ItemTypes.Honey), Items.GetPrice(Items.ItemTypes.Honey), 0);
         CreateItemShopSlot(Items.ItemTypes.Ice, Items.GetSprite(Items.ItemTypes.Ice), Items.GetPrice(Items.ItemTypes.Ice), 1);
+        inventory = inventoryObj.GetComponent<InventoryUI>().inventory;
     }
 
     private void CreateItemShopSlot(Items.ItemTypes itemTypes, Sprite itemSprite,int itemCost,int positionIndex)
@@ -38,13 +42,24 @@ public class ShopUI : MonoBehaviour
 
         shopItemTransform.GetComponent<Button_UI>().ClickFunc = () =>
         {
-            TryBuyItem(itemTypes);
-        }; 
+            Items duplicateItem = new Items { itemTypes = itemTypes, amount = 1 };
+            TryBuyItem(itemTypes, duplicateItem);
+            inventory.AddItems(duplicateItem);
+        };
     }
 
-    private void TryBuyItem(Items.ItemTypes itemType)
+    private void TryBuyItem(Items.ItemTypes itemType,Items items)
     {
-        shopping.BoughtItem(itemType);
+        if (itemType.Equals(Items.ItemTypes.Honey))
+        {
+            inventory.coin = inventory.coin - Items.GetPrice(Items.ItemTypes.Honey) * items.amount;
+        }
+        else if (itemType.Equals(Items.ItemTypes.Ice))
+        {
+            inventory.coin = inventory.coin - Items.GetPrice(Items.ItemTypes.Ice) * items.amount;
+        }
+        inventoryObj.GetComponent<InventoryUI>().CoinText.text = inventory.coin.ToString();
+        Debug.Log(itemType);
     }
 
 }

@@ -2,14 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using CodeMonkey.Utils;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
+
 
 
 public class InventoryUI : MonoBehaviour
 {
-    private Inventory inventory;
+    public Inventory inventory;
     private PlayerMovement player;
     public CraftingUI craftUI;
-    private IShop shopping;
 
     private Transform itemSlotList;
     private Transform itemSlot;
@@ -17,12 +19,17 @@ public class InventoryUI : MonoBehaviour
     [SerializeField]
     private Transform ItemPf;
 
+    // private Transform CoinUI;
+    [SerializeField]
+    public TMP_Text CoinText;
+
     private void Awake()
     {
         itemSlotList = transform.Find("ItemSlotList");
         itemSlot = itemSlotList.Find("ItemSlot");
         itemSlot.gameObject.SetActive(false);
         itemSlot.GetComponent<ItemSlotUI>().OnItemDropped += Inventory_OnItemListChanged;
+        // CoinUI = transform.Find("CoinUI");
     }
 
     public void SetInventory(Inventory inventory)
@@ -70,18 +77,19 @@ public class InventoryUI : MonoBehaviour
             //itemSlotRectTransform.transform.parent = itemSlot.transform;
 
             //Sell item
-            itemSlotRectTransform.GetComponent<Button_UI>().ClickFunc = () => 
+            itemSlotRectTransform.GetComponent<Button_UI>().ClickFunc = () =>
             {
                 Items duplicateItem = new Items { itemTypes = item.itemTypes, amount = item.amount };
-                TrySellItem(item.itemTypes);
+                TrySellItem(item.itemTypes, duplicateItem);
                 inventory.RemoveItem(item);
             };
 
             //Drop item
-            itemSlotRectTransform.GetComponent<Button_UI>().MouseRightClickFunc = () => {
+            itemSlotRectTransform.GetComponent<Button_UI>().MouseRightClickFunc = () =>
+            {
                 Items duplicateItem = new Items { itemTypes = item.itemTypes, amount = item.amount };
                 inventory.RemoveItem(item);
-                ItemWorld.DropItem(player.transform.position,duplicateItem);
+                ItemWorld.DropItem(player.transform.position, duplicateItem);
             };
 
 
@@ -99,7 +107,8 @@ public class InventoryUI : MonoBehaviour
             Inventory.InventorySlot tmpInventorySlot = inventorySlot;
 
             ItemSlotUI itemSlotUI = itemSlotRectTransform.GetComponent<ItemSlotUI>();
-            itemSlotUI.SetOnDropAction(() => {
+            itemSlotUI.SetOnDropAction(() =>
+            {
                 // Dropped on this UI Item Slot
                 Items draggedItem = ItemDragUI.Instance.GetItem();
                 draggedItem.RemoveFromItemContainer();
@@ -115,10 +124,28 @@ public class InventoryUI : MonoBehaviour
         }
     }
 
-    private void TrySellItem(Items.ItemTypes itemType)
+    private void TrySellItem(Items.ItemTypes itemType, Items item)
     {
-        shopping.SellItem(itemType);
+        if (itemType.Equals(Items.ItemTypes.Apple))
+        {
+            inventory.coin = inventory.coin + Items.GetSellPrice(Items.ItemTypes.Apple) * item.amount;
+        }
+        else if (itemType.Equals(Items.ItemTypes.Orange))
+        {
+            inventory.coin = inventory.coin + Items.GetSellPrice(Items.ItemTypes.Orange) * item.amount;
+        }
+        if (itemType.Equals(Items.ItemTypes.Honey))
+        {
+            inventory.coin = inventory.coin + Items.GetSellPrice(Items.ItemTypes.Honey) * item.amount;
+        }
+        else if (itemType.Equals(Items.ItemTypes.Ice))
+        {
+            inventory.coin = inventory.coin + Items.GetSellPrice(Items.ItemTypes.Ice) * item.amount;
+        }
+        else if (itemType.Equals(Items.ItemTypes.HoneyRoastedApples))
+        {
+            inventory.coin = inventory.coin + Items.GetSellPrice(Items.ItemTypes.HoneyRoastedApples) * item.amount;
+        }
+        CoinText.text = inventory.coin.ToString();
     }
-
-
 }
