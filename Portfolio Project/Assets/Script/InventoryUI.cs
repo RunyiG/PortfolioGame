@@ -145,6 +145,7 @@ public class InventoryUI : MonoBehaviour
         else if (itemType.Equals(Items.ItemTypes.HoneyRoastedApples))
         {
             inventory.coin = inventory.coin + Items.GetSellPrice(Items.ItemTypes.HoneyRoastedApples) * item.amount;
+            Debug.Log(Items.GetSellPrice(Items.ItemTypes.HoneyRoastedApples));
         }
         CoinText.text = inventory.coin.ToString();
     }

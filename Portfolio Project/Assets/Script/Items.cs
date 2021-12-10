@@ -21,7 +21,7 @@ public class Items
     public ItemTypes itemTypes;
 
     [Range(1,99)]
-    public int amount;
+    public int amount = 1;
 
     private ItemContainer itemContainer;
 
