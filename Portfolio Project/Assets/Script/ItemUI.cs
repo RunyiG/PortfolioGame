@@ -12,7 +12,20 @@ public class ItemUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
     private CanvasGroup canvasGroup;
     private Image image;
     private Items item;
+
     private TextMeshProUGUI amountText;
+    private TextMeshProUGUI priceText;
+
+    [SerializeField]
+    private KeyCode interactKey = KeyCode.E;
+    [SerializeField]
+    private GameObject UIGameObject_1 = null;
+    [SerializeField]
+    private GameObject UIGameObject_2 = null;
+    [SerializeField]
+    private GameObject UIGameObject_3 = null;
+    public bool Interactable { get; set; }
+    private bool showUI = false;
 
     private void Awake()
     {
@@ -21,6 +34,18 @@ public class ItemUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
         canvas = GetComponentInParent<Canvas>();
         image = transform.Find("image").GetComponent<Image>();
         amountText = transform.Find("amountText").GetComponent<TextMeshProUGUI>();
+        priceText = transform.Find("priceText").GetComponent<TextMeshProUGUI>();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(interactKey))
+        {
+            showUI = !showUI;
+            UIGameObject_1.SetActive(showUI);
+            UIGameObject_2.SetActive(showUI);
+            UIGameObject_3.SetActive(showUI);
+        }
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -62,6 +87,13 @@ public class ItemUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
         }
     }
 
+    public void SetPriceText()
+    {
+        int price;
+        price = Items.GetSellPrice(item.itemTypes) * item.amount;
+        priceText.text = price.ToString();
+    }
+
     public void Hide()
     {
         gameObject.SetActive(false);
@@ -77,6 +109,9 @@ public class ItemUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
         this.item = item;
         SetSprite(Items.GetSprite(item.itemTypes));
         SetAmountText(item.amount);
+        SetPriceText();
     }
+
+
 
 }
